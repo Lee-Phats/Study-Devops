@@ -1,5 +1,4 @@
-![alt](http://~pbs.twimg.com/media/GkaA-njaoAADx8Z?format=png&name=4096x4096)
-
+![alt text](image-1.png)
 # Quá trình xác thực SSH
 
 ## 1. Generate key pairs
