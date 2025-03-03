@@ -75,3 +75,6 @@ Repository "what-happens-when" của Alex là một tài nguyên tuyệt vời �
   2. Mở Developer Tools (nhấn `F12`).
   3. Truy cập một website và chuyển đến tab **Network**.
   4. Quan sát các yêu cầu HTTP, phân loại loại tài nguyên, thời gian tải, v.v.
+
+Link kham khảo:
+https://github.com/alex/what-happens-when?tab=readme-ov-file
