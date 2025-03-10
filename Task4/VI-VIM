@@ -1,0 +1,132 @@
+# Hướng dẫn trình soạn thảo VI/VIM Editor Linux
+
+Có rất nhiều công cụ xử lý văn bản trên Linux, phổ biến nhất là VI. Đôi khi mình vẫn dùng thêm trình soạn thảo khác như Nano chẳng hạn, nhưng do thói quen dùng VI vẫn sướng hơn vì nó nhỏ gọn, dễ tiếp cận. Đây là công cụ học quản trị server đầu tiên bạn nên biết.
+
+VIM hay VI là như nhau, VIM là bản nâng cấp của VI có thêm highlight giúp đọc config dễ dàng hơn. Hiện tại, để đáp ứng nhu cầu ngày càng đa dạng của coder, VIM đã phát triển nhiều plugin để gia tăng sức mạnh nhằm biến nó thành một IDE cho dân lập trình. Bạn nào muốn tìm hiểu sâu thì có thể Google search thêm nhé.
+
+## 1. Cài đặt VIM/VI và cấu hình cơ bản
+
+Từ giờ mình gọi VIM là VI cho ngắn gọn. Mặc định, VI được cài sẵn trên hầu hết hệ điều hành Linux. Nếu chưa có, bạn chạy lệnh:
+
+- **CentOS**: `yum install vim`
+- **Ubuntu**: `apt-get install vim`
+
+Thông thường khi gõ `vi ten_file`, hệ điều hành hiểu bạn đang dùng VIM bản minimal. Để dùng bản VIM đầy đủ, cần chỉnh sửa cấu hình một chút.
+
+Sửa profile:
+```sh
+vi /etc/profile
+```
+thêm dòng sau vào cuối file:
+```sh
+alias vi='vim'
+```
+Gõ lệnh để áp dụng thay đổi:
+```sh
+source /etc/profile
+```
+
+Để hiển thị số dòng trong VI và nhìn comment dễ hơn, mở file cấu hình:
+```sh
+vi /etc/vimrc
+```
+thêm vào:
+```sh
+set number
+syntax on
+highlight Comment ctermfg=LightCyan
+```
+
+## 2. Các chế độ chính trong Vim/Vi
+
+Vim hoạt động theo hệ thống chế độ. Các chế độ cơ bản gồm:
+
+- **Normal Mode (Chế độ lệnh)**: Mặc định khi mở Vim. Dùng để điều hướng, xóa, sao chép, cắt, thực hiện các lệnh chỉnh sửa.
+- **Insert Mode (Chế độ chèn)**: Dùng để nhập liệu. Vào bằng cách nhấn `i`, `a`, `I`, hoặc `A`.
+- **Visual Mode (Chế độ chọn)**: Dùng để bôi đen và chọn vùng văn bản. Nhấn `v` để chọn theo ký tự, `V` để chọn theo dòng, `Ctrl+v` để chọn theo khối.
+- **Command-line Mode (Chế độ dòng lệnh)**: Dùng để nhập các lệnh như lưu file, thoát, tìm kiếm, thay thế. Vào bằng cách nhấn `:` (trong Normal Mode).
+
+## 3. Di chuyển con trỏ (Navigation)
+
+Trong Normal Mode, bạn sử dụng các phím:
+
+- **`h, j, k, l`**: Di chuyển **trái, xuống, lên, phải**.
+- **`w / b / e`**:
+  - `w`: Di chuyển đến đầu từ tiếp theo.
+  - `b`: Di chuyển về đầu từ trước.
+  - `e`: Di chuyển đến cuối từ hiện tại.
+- **`0` và `$`**:
+  - `0`: Di chuyển đến đầu dòng.
+  - `$`: Di chuyển đến cuối dòng.
+- **`gg` và `G`**:
+  - `gg`: Di chuyển đến đầu file.
+  - `G`: Di chuyển đến cuối file.
+  - `<num>G`: Di chuyển đến dòng số `<num>`.
+- **`[[` và `]]`**: Di chuyển đến đầu và cuối của một đoạn code hoặc function.
+
+## 4. Các thao tác chỉnh sửa cơ bản
+
+Trong Normal Mode:
+
+- **Xóa**:
+  - `x`: Xóa ký tự ngay dưới con trỏ.
+  - `dd`: Xóa toàn bộ dòng.
+  - `dw`: Xóa từ từ vị trí con trỏ đến đầu từ kế tiếp.
+- **Sao chép (Yank) và cắt (Delete)**:
+  - `yy`: Sao chép dòng hiện tại.
+  - `p`: Dán sau con trỏ.
+  - `P`: Dán trước con trỏ.
+- **Hoàn tác và Làm lại**:
+  - `u`: Hoàn tác thao tác cuối.
+  - `Ctrl+r`: Làm lại thao tác đã hoàn tác.
+- **Chỉnh sửa văn bản**:
+  - `cw`: Xóa từ hiện tại và chuyển vào Insert Mode để sửa.
+  - `ciw`: Thay đổi toàn bộ từ.
+  - `cc`: Xóa nội dung dòng và chuyển sang Insert Mode.
+
+## 5. Các thao tác trong Insert Mode
+
+- **`i`**: Chèn trước con trỏ.
+- **`a`**: Chèn sau con trỏ.
+- **`I`**: Chèn từ đầu dòng.
+- **`A`**: Chèn ở cuối dòng.
+- **`o`**: Tạo dòng mới bên dưới.
+- **`O`**: Tạo dòng mới bên trên.
+- **Nhấn `Esc`** để thoát Insert Mode.
+
+## 6. Visual Mode – Chọn và thao tác trên vùng văn bản
+
+- **`v`**: Chọn ký tự.
+- **`V`**: Chọn toàn bộ dòng.
+- **`Ctrl+v`**: Chọn theo cột (block mode).
+- **Sau khi chọn**:
+  - `y`: Sao chép.
+  - `d`: Xóa.
+  - `p`: Dán.
+
+## 7. Tìm kiếm và thay thế
+
+- **Tìm kiếm**:
+  - `/pattern`: Tìm kiếm từ đầu file xuống.
+  - `?pattern`: Tìm kiếm từ cuối file lên.
+  - `n`: Chuyển sang kết quả tiếp theo.
+  - `N`: Trở về kết quả trước.
+- **Thay thế**:
+  - `:s/old/new/` – Thay thế lần đầu tiên trong dòng hiện tại.
+  - `:s/old/new/g` – Thay thế toàn bộ trong dòng hiện tại.
+  - `:%s/old/new/g` – Thay thế toàn bộ trong file.
+  - `:%s/old/new/gc` – Thay thế toàn bộ có xác nhận.
+
+## 8. Các lệnh lưu và thoát
+
+Trong Command-line Mode (`:`):
+
+- `:w` – Lưu file.
+- `:q` – Thoát (nếu không có thay đổi chưa lưu).
+- `:wq` hoặc `:x` – Lưu file và thoát.
+- `:q!` – Thoát mà không lưu.
+
+## Link tham khảo
+
+[Hướng dẫn chi tiết](https://www.semiconvn.com/home/tuyen-dung/10793-hng-dn-trinh-son-tho-vivim-editor-linux.html)
+
