@@ -5,6 +5,7 @@ Ping máy ảo gắn card NAT đến máy tính vật lí:
 
 bật terminal
 
+![alt text](image-5.png)
 ![alt text](image-2.png)
 
 xác định ip card Host-Only
