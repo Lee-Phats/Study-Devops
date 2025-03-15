@@ -1,4 +1,6 @@
 Ping máy ảo gắn card NAT đến máy tính vật lí:
+
+
 ![alt text](image-1.png)
 bật terminal
 
