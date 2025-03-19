@@ -13,7 +13,7 @@
 7. [Restrictions on (n, b, and h)](#restrictions-on-n-b-and-h)
 8. [Typical use](#typical-use)
 9. [Kết Luận](#kết-luận)
-10. [VD mặt nạ mạng phổ biến trong IPv4](#2552552550)
+10. [Cách biểu diễn địa chỉ IP và ý nghĩa của "/24"](#cách-biểu-diễn-địa-chỉ-ip-và-ý-nghĩa-của-24)
 
 ## Address format
 Cột này hiển thị dạng "a.b.c.d/xx" (hoặc chỉ /xx).
@@ -66,7 +66,18 @@ Các trường hợp sử dụng phổ biến:
 - /29, /28, /27 cho mạng LAN nhỏ.
 - /24, /23, /22 cho mạng LAN lớn hoặc ISP.
 
-### 255.255.255.0
+### Cách biểu diễn địa chỉ IP và ý nghĩa của "/24"
+Cách biểu diễn thay thế:
+
+Viết địa chỉ IP cùng với mặt nạ mạng dưới dạng dotted-decimal:
+Ví dụ: 192.168.111.62 255.255.255.0
+Đây là cách biểu diễn tương đương với 192.168.111.62/24.
+Ý nghĩa của "/24":
+
+/24 là phần CIDR notation (Classless Inter-Domain Routing) chỉ ra rằng 24 bit đầu tiên của địa chỉ IP là phần dành cho network (mạng).
+Điều này tương đương với mặt nạ mạng 255.255.255.0 (vì 255.255.255.0 có 24 bit 1).
+
+VD
 255.255.255.0 là dạng subnet mask (mặt nạ mạng) phổ biến trong IPv4, thường được gọi là /24 trong ký hiệu CIDR.
 
 1:Dạng nhị phân
