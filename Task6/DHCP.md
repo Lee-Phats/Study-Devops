@@ -3,6 +3,14 @@
 ## **1. DHCP là gì?**  
 DHCP (Dynamic Host Configuration Protocol) là một giao thức mạng giúp tự động cấp phát địa chỉ IP và các thông tin cấu hình mạng khác cho các thiết bị trong hệ thống. Thay vì phải gán địa chỉ IP bằng tay (tĩnh), DHCP giúp quản lý IP động, giảm công việc thủ công và tránh xung đột địa chỉ IP.
 
+## **2. Đặc điểm DHCP**  
+| **Danh mục**       | **Nội dung** |
+|--------------------|-------------|
+| **Mô hình Client/Server** | - DHCP Server quản lý và cấp phát địa chỉ IP.  <br> - DHCP Client nhận địa chỉ IP và thông tin cấu hình mạng từ Server. |
+| **Giao thức sử dụng** | - DHCP Server lắng nghe trên cổng 67. <br> - DHCP Client nhận phản hồi từ Server trên cổng 68. |
+| **Chức năng chính** | - Cấp phát địa chỉ IP tự động. <br> - Quản lý tập trung địa chỉ IP. <br> - Tái sử dụng địa chỉ IP. <br> - Giảm thiểu xung đột IP. <br> - Hỗ trợ cấu hình mạng linh hoạt. |
+| **Ưu điểm** | ✅ Giảm tải công việc quản trị mạng. <br> ✅ Hỗ trợ cấp phát địa chỉ IP động. <br> ✅ Đơn giản hóa cấu hình mạng. <br> ✅ Hỗ trợ mở rộng hệ thống mạng dễ dàng. |
+
 Quá trình cấp phát địa chỉ IP (Lease Allocation)
 
 ![alt text](image-1.png)
@@ -15,7 +23,7 @@ Client phản hồi bằng DHCP REQUEST để chấp nhận.
 
 DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
 
-## **2. Các loại bản tin DHCP**  
+## **3. Các loại bản tin DHCP**  
 
 | **Loại Bản Tin**  | **Chức Năng** |
 |-------------------|--------------|
@@ -30,21 +38,18 @@ DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
 
 5. **DHCP NAK (Thông Báo Từ Chối Cấp IP)**
     - Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
-🔹 Ví dụ:
-
+Ví dụ:
 Máy tính A nhận IP 192.168.1.100 với Lease Time là 24 giờ. Sau 24 giờ, nếu không gia hạn được và cố sử dụng IP này, DHCP Server có thể gửi DHCP NAK, buộc A phải lấy IP mới.
 
 6. **DHCP DECLINE (Từ Chối Địa Chỉ IP Do trùng lặp)**
     - Từ chối sử dụng IP và yêu cầu IP khác.
-🔹 Ví dụ:
-
+Ví dụ:
 Máy tính B được cấp IP 192.168.1.101. Khi kiểm tra, B phát hiện rằng địa chỉ này đã được sử dụng bởi một thiết bị khác. B sẽ gửi DHCP Decline để yêu cầu IP khác.
 
 
 7. **DHCP RELEASE (Trả lại Địa Chỉ IP)**
     - Giải phóng IP để cấp phát lại.
-🔹 Ví dụ:
-
+Ví dụ:
 Máy tính C đang sử dụng IP 192.168.1.102. Khi tắt máy hoặc rời khỏi mạng, nó gửi DHCP Release để giải phóng IP, giúp các thiết bị khác có thể sử dụng IP này.
 
 8. **DHCP INFORM (Yêu Cầu Thông Tin Mạng)**
@@ -53,35 +58,16 @@ Máy tính C đang sử dụng IP 192.168.1.102. Khi tắt máy hoặc rời kh�
 
 Máy tính D có địa chỉ IP tĩnh là 192.168.1.200 nhưng không biết DNS Server của mạng. D gửi DHCP Inform đến máy chủ DHCP, và máy chủ phản hồi với địa chỉ DNS 8.8.8.8.
 
-## **3. Tiến trình hoạt động của DHCP**  
+## **4. Tiến trình hoạt động của DHCP**  
 Quá trình cấp phát địa chỉ IP
+
 ![alt text](image-2.png)
 Quá trình xin cấp phát lại địa chỉ IP
+
 ![alt text](image-3.png)
 Quá trình Renew và Rebind
+
 ![alt text](image-4.png)
-
-## **4. Đặc điểm DHCP**  
-Mô hình Client/Server:
-    DHCP Server quản lý và cấp phát địa chỉ IP.
-    DHCP Client nhận địa chỉ IP và thông tin cấu hình mạng từ Server.
-
-Giao thức sử dụng:
-    DHCP Server lắng nghe trên cổng 67.
-    DHCP Client nhận phản hồi từ Server trên cổng 68.
-
-Chức năng chính:
-    Cấp phát địa chỉ IP tự động.
-    Quản lý tập trung địa chỉ IP.
-    Tái sử dụng địa chỉ IP.
-    Giảm thiểu xung đột IP.
-    Hỗ trợ cấu hình mạng linh hoạt.
-
-Ưu điểm:
-✅ Giảm tải công việc quản trị mạng.
-✅ Hỗ trợ cấp phát địa chỉ IP động.
-✅ Đơn giản hóa cấu hình mạng.
-✅ Hỗ trợ mở rộng hệ thống mạng dễ dàng.
 
 ## **5. Cơ chế phân bổ địa chỉ của DHCP Server**
 DHCP có 3 cơ chế cấp phát địa chỉ IP:
