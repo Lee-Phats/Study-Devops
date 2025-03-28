@@ -37,25 +37,24 @@ DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
 | **8.DHCP INFORM**   | Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP. |
 
 5. **DHCP NAK (Thông Báo Từ Chối Cấp IP)**
-    - Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
+- Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
 Ví dụ:
 Máy tính A nhận IP 192.168.1.100 với Lease Time là 24 giờ. Sau 24 giờ, nếu không gia hạn được và cố sử dụng IP này, DHCP Server có thể gửi DHCP NAK, buộc A phải lấy IP mới.
 
 6. **DHCP DECLINE (Từ Chối Địa Chỉ IP Do trùng lặp)**
-    - Từ chối sử dụng IP và yêu cầu IP khác.
+- Từ chối sử dụng IP và yêu cầu IP khác.
 Ví dụ:
 Máy tính B được cấp IP 192.168.1.101. Khi kiểm tra, B phát hiện rằng địa chỉ này đã được sử dụng bởi một thiết bị khác. B sẽ gửi DHCP Decline để yêu cầu IP khác.
 
 
 7. **DHCP RELEASE (Trả lại Địa Chỉ IP)**
-    - Giải phóng IP để cấp phát lại.
+- Giải phóng IP để cấp phát lại.
 Ví dụ:
 Máy tính C đang sử dụng IP 192.168.1.102. Khi tắt máy hoặc rời khỏi mạng, nó gửi DHCP Release để giải phóng IP, giúp các thiết bị khác có thể sử dụng IP này.
 
 8. **DHCP INFORM (Yêu Cầu Thông Tin Mạng)**
-    - Cung cấp thông số mạng như DNS, Gateway.    
+- Cung cấp thông số mạng như DNS, Gateway.    
  Ví dụ:
-
 Máy tính D có địa chỉ IP tĩnh là 192.168.1.200 nhưng không biết DNS Server của mạng. D gửi DHCP Inform đến máy chủ DHCP, và máy chủ phản hồi với địa chỉ DNS 8.8.8.8.
 
 ## **4. Tiến trình hoạt động của DHCP**  
@@ -64,8 +63,10 @@ Quá trình cấp phát địa chỉ IP
 ![alt text](image-2.png)
 Quá trình xin cấp phát lại địa chỉ IP
 
+
 ![alt text](image-3.png)
 Quá trình Renew và Rebind
+
 
 ![alt text](image-4.png)
 
