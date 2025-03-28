@@ -156,16 +156,20 @@ Quá trình xin cấp phát lại địa chỉ IP
 
 
 ![alt text](image-3.png)
+
 Có 2 trường hợp mà client thực hiện quá trình Reallocation hơn là Allocation:
 
 Power on with Existing Lease.
 Reboot
+
 Nếu client khởi động lại và nó đã có sẵn một hợp đồng thuê, nó không cần phải thực hiện lại quá trình full lease allocation, thay vào đó, nó có thể sử dụng quá trình ngắn hơn là Reallocation. Client broadcast một request để tìm server hiện tại đang quản lý thông tin về hợp đồng mà nó đang thuê. Server đó gửi lại để xác nhận xem hợp đồng của client còn hiệu lực hay không.
 
 Quá trình Renew và Rebind
-Do thời hạn của mỗi client khi thuê IP thường đều là có hạn (trừ trường hợp Automatication Allocation) nên cần có quá trình gia hạn (renewal) lại với DHCP server quả lý và nếu quá trình renewal không thành công thì sẽ rebind lại (gửi request) tới bất kì DHCP server khác đang hoạt động để gia hạn hợp đồng.
 
 ![alt text](image-4.png)
+
+Do thời hạn của mỗi client khi thuê IP thường đều là có hạn (trừ trường hợp Automatication Allocation) nên cần có quá trình gia hạn (renewal) lại với DHCP server quả lý và nếu quá trình renewal không thành công thì sẽ rebind lại (gửi request) tới bất kì DHCP server khác đang hoạt động để gia hạn hợp đồng.
+
 
 ## **5. Cơ chế phân bổ địa chỉ của DHCP Server**
 DHCP có 3 cơ chế cấp phát địa chỉ IP:
