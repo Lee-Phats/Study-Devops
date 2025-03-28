@@ -19,14 +19,14 @@ DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
 
 | **Loại Bản Tin**  | **Chức Năng** |
 |-------------------|--------------|
-| **DHCP DISCOVER** | Client gửi yêu cầu tìm DHCP Server. |
-| **DHCP OFFER**    | Server phản hồi với một địa chỉ IP có sẵn. |
-| **DHCP REQUEST**  | Client xác nhận muốn sử dụng địa chỉ IP được cung cấp. |
-| **DHCP ACK**      | Server xác nhận và cấp phát địa chỉ IP chính thức. |
-| **DHCP NAK**      | Server từ chối cấp địa chỉ IP. |
-| **DHCP DECLINE**  | Client từ chối địa chỉ IP do bị trùng lặp. |
-| **DHCP RELEASE**  | Client trả lại địa chỉ IP cho Server. |
-| **DHCP INFORM**   | Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP. |
+| **1.DHCP DISCOVER** | Client gửi yêu cầu tìm DHCP Server. |
+| **2.DHCP OFFER**    | Server phản hồi với một địa chỉ IP có sẵn. |
+| **3.DHCP REQUEST**  | Client xác nhận muốn sử dụng địa chỉ IP được cung cấp. |
+| **4.DHCP ACK**      | Server xác nhận và cấp phát địa chỉ IP chính thức. |
+| **5.DHCP NAK**      | Server từ chối cấp địa chỉ IP. |
+| **6.DHCP DECLINE**  | Client từ chối địa chỉ IP do bị trùng lặp. |
+| **7.DHCP RELEASE**  | Client trả lại địa chỉ IP cho Server. |
+| **8.DHCP INFORM**   | Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP. |
 
 5. **DHCP NAK (Thông Báo Từ Chối Cấp IP)**
     - Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
