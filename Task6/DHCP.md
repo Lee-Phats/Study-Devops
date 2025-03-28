@@ -1,43 +1,128 @@
-# **DHCP: Giao Thức Cấu Hình Động Địa Chỉ IP - Chi Tiết, Đầy Đủ & Dễ Hiểu**  
+# **DHCP: Giao Thức Cấu Hình Động Địa Chỉ IP**  
 
 ## **1. DHCP là gì?**  
 DHCP (Dynamic Host Configuration Protocol) là một giao thức mạng giúp tự động cấp phát địa chỉ IP và các thông tin cấu hình mạng khác cho các thiết bị trong hệ thống. Thay vì phải gán địa chỉ IP bằng tay (tĩnh), DHCP giúp quản lý IP động, giảm công việc thủ công và tránh xung đột địa chỉ IP.
 
----
-
 ## **2. Các loại bản tin DHCP**  
 
-1. **Discovery (Tìm kiếm)**  
-   - Khi một thiết bị (client) muốn tham gia mạng, nó sẽ gửi gói tin **DHCP Discover** để tìm máy chủ DHCP.
-  
-2. **Offer (Đề xuất IP)**  
-   - Máy chủ DHCP nhận được gói Discover, sau đó phản hồi bằng gói **DHCP Offer**, trong đó có một địa chỉ IP khả dụng.
+![alt text](image-1.png)
 
-3. **Request (Yêu cầu IP)**  
-   - Client nhận được Offer và gửi lại **DHCP Request** để yêu cầu sử dụng địa chỉ IP đó.
-
-4. **Acknowledge (Xác nhận)**  
-   - Máy chủ DHCP xác nhận yêu cầu bằng gói **DHCP Acknowledgement (ACK)** và thiết bị được cấp phát IP.
-
-5. **DHCP NAK ()**
+Loại bản tin	Chức năng
+DHCP DISCOVER	Client gửi yêu cầu tìm DHCP Server.
+DHCP OFFER	    Server phản hồi với một địa chỉ IP có sẵn.
+DHCP REQUEST	Client xác nhận muốn sử dụng địa chỉ IP được cung cấp.
+DHCP ACK	    Server xác nhận và cấp phát địa chỉ IP chính thức.
+DHCP NAK	    Server từ chối cấp địa chỉ IP.
+DHCP DECLINE	Client từ chối địa chỉ IP do bị trùng lặp.
+DHCP RELEASE	Client trả lại địa chỉ IP cho Server.
+DHCP INFORM	    Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP.
+5. **DHCP NAK (Thông Báo Từ Chối Cấp IP)**
     - Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
+🔹 Ví dụ:
 
-6. **DHCP DECLINE ()**
+Máy tính A nhận IP 192.168.1.100 với Lease Time là 24 giờ. Sau 24 giờ, nếu không gia hạn được và cố sử dụng IP này, DHCP Server có thể gửi DHCP NAK, buộc A phải lấy IP mới.
+
+6. **DHCP DECLINE (Từ Chối Địa Chỉ IP Do trùng lặp)**
     - Từ chối sử dụng IP và yêu cầu IP khác.
+🔹 Ví dụ:
 
-7. **DHCP RELEASE ()**
+Máy tính B được cấp IP 192.168.1.101. Khi kiểm tra, B phát hiện rằng địa chỉ này đã được sử dụng bởi một thiết bị khác. B sẽ gửi DHCP Decline để yêu cầu IP khác.
+
+
+7. **DHCP RELEASE (Trả lại Địa Chỉ IP)**
     - Giải phóng IP để cấp phát lại.
+🔹 Ví dụ:
 
-8. **DHCP INFORM ()**
+Máy tính C đang sử dụng IP 192.168.1.102. Khi tắt máy hoặc rời khỏi mạng, nó gửi DHCP Release để giải phóng IP, giúp các thiết bị khác có thể sử dụng IP này.
+
+8. **DHCP INFORM (Yêu Cầu Thông Tin Mạng)**
     - Cung cấp thông số mạng như DNS, Gateway.    
+ Ví dụ:
+
+Máy tính D có địa chỉ IP tĩnh là 192.168.1.200 nhưng không biết DNS Server của mạng. D gửi DHCP Inform đến máy chủ DHCP, và máy chủ phản hồi với địa chỉ DNS 8.8.8.8.
+
+## **3. Tiến trình hoạt động của DHCP**  
+
+1. Quá trình cấp phát địa chỉ IP (Lease Allocation)
+Client gửi bản tin DHCP DISCOVER (Broadcast).
+
+DHCP Server gửi bản tin DHCP OFFER.
+
+Client phản hồi bằng DHCP REQUEST để chấp nhận.
+
+DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
+
+2. Quá trình xin cấp phát lại địa chỉ IP (Lease Reallocation)
+Nếu Client khởi động lại, nó có thể yêu cầu lại địa chỉ cũ bằng DHCP REQUEST.
+
+DHCP Server có thể cấp lại hoặc từ chối địa chỉ này.
+
+3. Quá trình Renew và Rebind
+Sau 50% thời gian thuê, Client gửi DHCP REQUEST để gia hạn địa chỉ IP.
+
+Nếu không nhận phản hồi, sau 87.5% thời gian thuê, Client gửi DHCP REQUEST đến bất kỳ Server nào khác.
 
 ⏳ **Lưu ý:** Địa chỉ IP cấp phát có thời gian thuê nhất định (**DHCP Lease Time**). Khi gần hết hạn, thiết bị phải gửi yêu cầu gia hạn.
 
-## **3. Cấu Trúc Gói Tin DHCP**  
+## **4. Đặc điểm DHCP**  
+Mô hình Client/Server:
+    DHCP Server quản lý và cấp phát địa chỉ IP.
+    DHCP Client nhận địa chỉ IP và thông tin cấu hình mạng từ Server.
+
+Giao thức sử dụng:
+    DHCP Server lắng nghe trên cổng 67.
+    DHCP Client nhận phản hồi từ Server trên cổng 68.
+
+Chức năng chính:
+    Cấp phát địa chỉ IP tự động.
+    Quản lý tập trung địa chỉ IP.
+    Tái sử dụng địa chỉ IP.
+    Giảm thiểu xung đột IP.
+    Hỗ trợ cấu hình mạng linh hoạt.
+
+Ưu điểm:
+✅ Giảm tải công việc quản trị mạng.
+✅ Hỗ trợ cấp phát địa chỉ IP động.
+✅ Đơn giản hóa cấu hình mạng.
+✅ Hỗ trợ mở rộng hệ thống mạng dễ dàng.
+
+## **5. Cơ chế phân bổ địa chỉ của DHCP Server**
+DHCP có 3 cơ chế cấp phát địa chỉ IP:
+
+1. Manual Allocation (Cấp phát thủ công)
+    Người quản trị gán địa chỉ IP cố định cho từng thiết bị cụ thể.
+    Thường dùng cho Server, Router, Printer, Camera IP.
+
+2. Automatic Allocation (Cấp phát tự động)
+    DHCP Server tự động gán một địa chỉ IP từ danh sách có sẵn.
+    Địa chỉ được cấp sẽ cố định cho Client đó.
+
+3. Dynamic Allocation (Cấp phát động)
+    DHCP Server cấp địa chỉ IP theo yêu cầu, nhưng có thời hạn thuê.
+    Khi hết hạn, địa chỉ IP có thể được tái sử dụng.
+
+Đây là cơ chế phổ biến nhất hiện nay.
+
+## **6. Vòng đời và thời gian "thuê" địa chỉ IP của Client**
+Quy trình cấp phát và quản lý địa chỉ IP gồm 5 giai đoạn:
+
+1. Allocation (Cấp phát lần đầu)
+
+2. Reallocation (Cấp phát lại khi khởi động lại)
+
+3. Normal Operation (Hoạt động bình thường)
+
+4. Renewal (Gia hạn địa chỉ IP sau 50% thời gian thuê)
+
+5. Rebind (Yêu cầu gia hạn từ bất kỳ DHCP Server nào sau 87.5% thời gian thuê)
+
+## **7. Cấu Trúc Gói Tin DHCP**  
 
 Gói tin DHCP sử dụng giao thức **UDP** trên các cổng:  
 - **Cổng 67**: Máy chủ DHCP lắng nghe yêu cầu từ client.  
 - **Cổng 68**: Máy khách nhận phản hồi từ máy chủ DHCP.  
+
+![alt text](image.png)
 
 ### **Cấu trúc gói tin DHCP gồm các phần chính:**  
 | Trường | Kích thước (Bytes) | Mô tả |
@@ -58,7 +143,7 @@ Gói tin DHCP sử dụng giao thức **UDP** trên các cổng:
 | **Boot File Name** | 128 | Tên file khởi động (nếu có) |
 | **Options** | Tùy biến | Chứa các thông tin mở rộng (DNS, Gateway...) |
 
-## **4. Các Thông Số Quan Trọng Trong DHCP**  
+## **8. Các Thông Số Quan Trọng Trong DHCP**  
 
 1. **DHCP Lease Time**: Thời gian mà IP được cấp phát. Khi gần hết hạn, thiết bị phải yêu cầu gia hạn.  
 2. **Default Gateway**: Địa chỉ của router giúp thiết bị kết nối ra ngoài mạng LAN.  
@@ -67,72 +152,3 @@ Gói tin DHCP sử dụng giao thức **UDP** trên các cổng:
 5. **Option 66, 67**: Dùng để chỉ định máy chủ TFTP cho các thiết bị cần khởi động từ mạng (PXE Boot).  
 6. **Option 82**: Dùng trong các hệ thống mạng lớn, giúp định danh thiết bị yêu cầu DHCP.  
 
-## **5. So Sánh DHCPv4 và DHCPv6**  
-
-| Đặc điểm | DHCPv4 | DHCPv6 |
-|----------|--------|--------|
-| Sử dụng trên | IPv4 | IPv6 |
-| Cách cấp phát IP | Địa chỉ IP động hoặc tĩnh | Địa chỉ Link-Local, SLAAC, hoặc DHCPv6 |
-| Loại địa chỉ IP | IPv4 (32-bit) | IPv6 (128-bit) |
-| Cách hoạt động | DORA (4 bước) | SARR (Solicit, Advertise, Request, Reply) |
-| Hỗ trợ NAT | Có | Không cần NAT (IPv6 có đủ địa chỉ) |
-
-💡 **Lưu ý**: IPv6 thường sử dụng **SLAAC** (Stateless Address Autoconfiguration) thay vì DHCP.
-
-## **6. Bảo Mật DHCP: Các Nguy Cơ & Biện Pháp Bảo Vệ**  
-
-### 🔴 **Nguy cơ tấn công DHCP**  
-❌ **DHCP Spoofing**: Kẻ tấn công giả mạo máy chủ DHCP để cấp phát IP sai lệch.  
-❌ **Rogue DHCP Server**: Máy chủ DHCP giả mạo trong mạng, gây gián đoạn dịch vụ.  
-❌ **DHCP Starvation**: Tấn công làm cạn kiệt địa chỉ IP bằng cách gửi nhiều yêu cầu giả.  
-
-### 🛡 **Các biện pháp bảo mật**  
-✅ **DHCP Snooping**: Chỉ cho phép DHCP Server hợp lệ hoạt động trong mạng.  
-✅ **Port Security**: Giới hạn số địa chỉ MAC trên cổng switch.  
-✅ **IP Source Guard**: Chỉ cho phép thiết bị sử dụng địa chỉ IP được cấp phát hợp lệ.  
-
-## **7. Cách Cấu Hình DHCP Trên Các Thiết Bị**  
-
-### **1️⃣ Trên Windows Server**  
-Bật DHCP Role trên Windows Server:  
-```powershell
-Install-WindowsFeature -Name DHCP -IncludeManagementTools
-```
-Cấu hình một Scope DHCP:  
-```powershell
-Add-DhcpServerv4Scope -Name "MyScope" -StartRange 192.168.1.100 -EndRange 192.168.1.200 -SubnetMask 255.255.255.0 -State Active
-```
-
-### **2️⃣ Trên Cisco Router**  
-```cisco
-Router(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
-Router(config)# ip dhcp pool MyPool
-Router(dhcp-config)# network 192.168.1.0 255.255.255.0
-Router(dhcp-config)# default-router 192.168.1.1
-Router(dhcp-config)# dns-server 8.8.8.8
-```
-
-### **3️⃣ Trên Linux (Ubuntu/Debian)**  
-Cài đặt DHCP Server:  
-```bash
-sudo apt update && sudo apt install isc-dhcp-server
-```
-Cấu hình file `/etc/dhcp/dhcpd.conf`:  
-```bash
-subnet 192.168.1.0 netmask 255.255.255.0 {
-    range 192.168.1.100 192.168.1.200;
-    option routers 192.168.1.1;
-    option domain-name-servers 8.8.8.8;
-}
-```
-Khởi động dịch vụ:  
-```bash
-sudo systemctl restart isc-dhcp-server
-```
-
-## **8. Kết Luận**  
-
-✔ DHCP giúp quản lý địa chỉ IP tự động, tiết kiệm công sức và giảm lỗi.  
-✔ Có thể sử dụng DHCP trên nhiều hệ thống khác nhau (Windows, Cisco, Linux...).  
-✔ Cần có các biện pháp bảo mật như DHCP Snooping để tránh bị tấn công.  
-✔ Với IPv6, DHCPv6 có thể kết hợp với SLAAC để cấp phát địa chỉ hiệu quả hơn.  
