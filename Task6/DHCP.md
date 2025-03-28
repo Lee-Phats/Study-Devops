@@ -3,9 +3,19 @@
 ## **1. DHCP là gì?**  
 DHCP (Dynamic Host Configuration Protocol) là một giao thức mạng giúp tự động cấp phát địa chỉ IP và các thông tin cấu hình mạng khác cho các thiết bị trong hệ thống. Thay vì phải gán địa chỉ IP bằng tay (tĩnh), DHCP giúp quản lý IP động, giảm công việc thủ công và tránh xung đột địa chỉ IP.
 
-## **2. Các loại bản tin DHCP**  
+Quá trình cấp phát địa chỉ IP (Lease Allocation)
 
 ![alt text](image-1.png)
+
+Client gửi bản tin DHCP DISCOVER (Broadcast).
+
+DHCP Server gửi bản tin DHCP OFFER.
+
+Client phản hồi bằng DHCP REQUEST để chấp nhận.
+
+DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
+
+## **2. Các loại bản tin DHCP**  
 
 Loại bản tin	Chức năng
 DHCP DISCOVER	Client gửi yêu cầu tìm DHCP Server.
@@ -42,27 +52,12 @@ Máy tính C đang sử dụng IP 192.168.1.102. Khi tắt máy hoặc rời kh�
 Máy tính D có địa chỉ IP tĩnh là 192.168.1.200 nhưng không biết DNS Server của mạng. D gửi DHCP Inform đến máy chủ DHCP, và máy chủ phản hồi với địa chỉ DNS 8.8.8.8.
 
 ## **3. Tiến trình hoạt động của DHCP**  
-
-1. Quá trình cấp phát địa chỉ IP (Lease Allocation)
-Client gửi bản tin DHCP DISCOVER (Broadcast).
-
-DHCP Server gửi bản tin DHCP OFFER.
-
-Client phản hồi bằng DHCP REQUEST để chấp nhận.
-
-DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
-
-2. Quá trình xin cấp phát lại địa chỉ IP (Lease Reallocation)
-Nếu Client khởi động lại, nó có thể yêu cầu lại địa chỉ cũ bằng DHCP REQUEST.
-
-DHCP Server có thể cấp lại hoặc từ chối địa chỉ này.
-
-3. Quá trình Renew và Rebind
-Sau 50% thời gian thuê, Client gửi DHCP REQUEST để gia hạn địa chỉ IP.
-
-Nếu không nhận phản hồi, sau 87.5% thời gian thuê, Client gửi DHCP REQUEST đến bất kỳ Server nào khác.
-
-⏳ **Lưu ý:** Địa chỉ IP cấp phát có thời gian thuê nhất định (**DHCP Lease Time**). Khi gần hết hạn, thiết bị phải gửi yêu cầu gia hạn.
+Quá trình cấp phát địa chỉ IP
+![alt text](image-2.png)
+Quá trình xin cấp phát lại địa chỉ IP
+![alt text](image-3.png)
+Quá trình Renew và Rebind
+![alt text](image-4.png)
 
 ## **4. Đặc điểm DHCP**  
 Mô hình Client/Server:
@@ -103,18 +98,26 @@ DHCP có 3 cơ chế cấp phát địa chỉ IP:
 
 Đây là cơ chế phổ biến nhất hiện nay.
 
-## **6. Vòng đời và thời gian "thuê" địa chỉ IP của Client**
+## **6. Vòng đời và thời gian "thuê"  IP của Client**
 Quy trình cấp phát và quản lý địa chỉ IP gồm 5 giai đoạn:
 
 1. Allocation (Cấp phát lần đầu)
+Một client bắt đầu khi chưa từng thuê IP và do đó chưa có địa chỉ được cấp từ DHCP server. Nó yêu cầu thuê thông qua một quá trình phân bổ Allocation.
 
 2. Reallocation (Cấp phát lại khi khởi động lại)
+Nếu client đã có sẵn địa chỉ IP lần thuê hiện tại, và sau đó khi nó khởi động lại sau khi tắt, nó sẽ liên lạc với DHCP server để xác nhận việc thuê và dùng lại các thông số vận hành. Điều này được gọi là Reallocation, nó tương tự như Allocation nhưng ngắn hơn.
 
 3. Normal Operation (Hoạt động bình thường)
+Khi một hợp đồng cho thuê đang hoạt động, client được gán vào một địa chỉ mà DHCP server cấp phát, cho thuê.
 
 4. Renewal (Gia hạn địa chỉ IP sau 50% thời gian thuê)
+Sau một phần thời gian nhất định của thời gian cho thuê, client sẽ cố gắng liên lạc với máy chủ cho thuê ban đầu, gia hạn thêm hợp đồng để nó có thể tiếp tục sử dụng IP đó sau khi thời gian cho thuê kết thúc (thường sau nửa thời gian được phép sử dụng IP, client sẽ liên lạc với DHCP server để gia hạn thêm hợp đồng)
 
 5. Rebind (Yêu cầu gia hạn từ bất kỳ DHCP Server nào sau 87.5% thời gian thuê)
+Nếu việc renewal không thành (giả sử máy server bị tắt), sau đó client sẽ cố gắng kết nối lại với bất kì máy chủ DHCP nào đang hoạt động, cố gắng mở rộng thời gian cho thuê hiện tại.
+
+6. Release
+client có thể quyết định ở bất kì thời điểm nào đó nó không còn muốn sử dụng địa chỉ IP được cấp từ DHCP nữa, và có thể chấm dứt hợp đồng cho thuê, giải phóng địa chỉ IP.
 
 ## **7. Cấu Trúc Gói Tin DHCP**  
 
