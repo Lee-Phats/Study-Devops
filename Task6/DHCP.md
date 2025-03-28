@@ -60,6 +60,7 @@ Máy tính D có địa chỉ IP tĩnh là 192.168.1.200 nhưng không biết DN
 Quá trình cấp phát địa chỉ IP
 
 ![alt text](image-2.png)
+
 Quá trình xử lý quan trọng nhất trong DHCP là quá trình Lease Allocation, được sử dụng bởi client để yêu cầu một hợp đồng thuê IP. Client gửi broadcast một request tới DHCP server. Mỗi DHCP server sẵn sàng cung cấp cho client một hợp đồng thuê và gửi lại cho nó một bản tin Offer. Client chọn bản hợp đồng mà nó nhận được và gửi lại tới tất cả các server về sự lựa chọn của nó. Server được chọn sẽ gửi lại cho client thông tin và hợp đồng thuê. Các bước được thực hiện như sau:
 
 Bước 1: Client tạo bản tin DHCPDISCOVER
