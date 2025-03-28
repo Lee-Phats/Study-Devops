@@ -17,15 +17,17 @@ DHCP Server gửi DHCP ACK, hoàn tất cấp phát IP.
 
 ## **2. Các loại bản tin DHCP**  
 
-Loại bản tin	Chức năng
-DHCP DISCOVER	Client gửi yêu cầu tìm DHCP Server.
-DHCP OFFER	    Server phản hồi với một địa chỉ IP có sẵn.
-DHCP REQUEST	Client xác nhận muốn sử dụng địa chỉ IP được cung cấp.
-DHCP ACK	    Server xác nhận và cấp phát địa chỉ IP chính thức.
-DHCP NAK	    Server từ chối cấp địa chỉ IP.
-DHCP DECLINE	Client từ chối địa chỉ IP do bị trùng lặp.
-DHCP RELEASE	Client trả lại địa chỉ IP cho Server.
-DHCP INFORM	    Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP.
+| **Loại Bản Tin**  | **Chức Năng** |
+|-------------------|--------------|
+| **DHCP DISCOVER** | Client gửi yêu cầu tìm DHCP Server. |
+| **DHCP OFFER**    | Server phản hồi với một địa chỉ IP có sẵn. |
+| **DHCP REQUEST**  | Client xác nhận muốn sử dụng địa chỉ IP được cung cấp. |
+| **DHCP ACK**      | Server xác nhận và cấp phát địa chỉ IP chính thức. |
+| **DHCP NAK**      | Server từ chối cấp địa chỉ IP. |
+| **DHCP DECLINE**  | Client từ chối địa chỉ IP do bị trùng lặp. |
+| **DHCP RELEASE**  | Client trả lại địa chỉ IP cho Server. |
+| **DHCP INFORM**   | Client yêu cầu thông tin cấu hình khác ngoài địa chỉ IP. |
+
 5. **DHCP NAK (Thông Báo Từ Chối Cấp IP)**
     - Từ chối cấp phát IP, buộc Client phải xin lại IP mới.
 🔹 Ví dụ:
