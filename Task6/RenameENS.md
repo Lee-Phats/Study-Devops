@@ -20,20 +20,24 @@ Lưu và thoát file (`Ctrl + X → Y → Enter`).
 ```bash
 sudo udevadm control --reload
 ```
-
-## 🔹 Bước 3: Kiểm tra lại giao diện mạng
+## 🔹 Bước 3: Tắt và bật lại giao diện ens38: 
+Sau khi áp dụng quy tắc, tắt và bật lại giao diện ens38:
 
 ```bash
-ip a
+sudo ip link set ens38 down
+sudo ip link set ens38 up 
 ```
 
 ## 🔹 Bước 4: Khởi động lại máy
+
+Sau khi máy khởi động lại, bạn có thể thử khởi động lại hệ thống:
 
 ```bash
 sudo reboot
 ```
 
-Sau khi máy khởi động lại, kiểm tra lại tên giao diện mạng bằng lệnh:
+## 🔹 Bước 5: Kiểm tra lại tên giao diện
 
 ```bash
 ip a
+```
