@@ -44,26 +44,34 @@ INTERFACESv4=""
 Sửa lại thành:
 
 INTERFACESv4="ens37"
-![alt text](image-11.png)
+![alt text](image-16.png)
 
 
-Bước 3: Cấu hình địa chỉ IP cho giao diện ens37 với Netplan
-Mở file cấu hình Netplan (đường dẫn có thể là /etc/netplan/00-installer-config.yaml hoặc /etc/netplan/*.yaml):
+Bước 3: Cấu hình file DHCP Server (/etc/dhcp/dhcpd.conf)
 
-sudo nano /etc/netplan/00-installer-config.yaml
+sudo nano /etc/dhcp/dhcpd.conf
+
 
 Chỉnh sửa nội dung file như sau:
 
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    ens37:
-      addresses:
-        - 10.10.10.1/24
-      dhcp4: no
-      dhcp6: no
-![alt text](image-12.png)
+shared-network HOSTONLY {
+    # Đây là subnet của IP chính của ens33 (không cấp phát IP, chỉ định định danh mạng vật lý)
+    subnet 192.168.111.0 netmask 255.255.255.0 {
+        # Không khai báo range – chỉ để DHCP nhận diện interface
+    }
+
+    # Đây là subnet cho DHCP cấp phát (mạng host-only)
+    subnet 10.10.10.0 netmask 255.255.255.0 {
+        range 10.10.10.64 10.10.10.100;
+        option routers 10.10.10.1;
+        option subnet-mask 255.255.255.0;
+        option broadcast-address 10.10.10.255;
+        option domain-name-servers 8.8.8.8, 8.8.4.4;
+        default-lease-time 600;
+        max-lease-time 7200;
+    }
+}
+![alt text](image-17.png)
 
 
 Lưu và áp dụng cấu hình:
@@ -74,62 +82,72 @@ Kiểm tra lại địa chỉ IP của giao diện ens37:
 
 ip a | grep ens37
 
-4. Cấu hình DHCP Server
+4. Cấu hình alias IP cho ens33 (để dùng làm gateway)
 
-Mở file cấu hình DHCP:
+Thêm alias tạm thời cho ens33:
 
-sudo nano /etc/dhcp/dhcpd.conf
+sudo ip addr add 10.10.10.1/24 dev ens33
 
-Thêm cấu hình sau:
+Thêm file cấu hình (ví dụ: /etc/netplan/01-netcfg.yaml) 
 
-subnet 10.10.10.0 netmask 255.255.255.0 {
-  range 10.10.10.64 10.10.10.100;
-  option routers 10.10.10.1;
-  option domain-name-servers 8.8.8.8, 8.8.4.4;
-  option broadcast-address 10.10.10.255;
-  default-lease-time 600;
-  max-lease-time 7200;
-}
-![alt text](image-13.png)
+sudo nano /etc/netplan/01-netcfg.yaml
 
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      addresses:
+        - 192.168.111.66/24
+        - 10.10.10.1/24
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+    ens37:
+      dhcp4: true
+![alt text](image-18.png)
+
+
+Áp dụng cấu hình nếu dùng Netplan:
+
+sudo netplan apply
 
 Bước 5: Khởi động và kiểm tra dịch vụ DHCP Server
 Khởi động lại dịch vụ DHCP:
 
 sudo systemctl restart isc-dhcp-server
-
-Kiểm tra trạng thái dịch vụ:
-
 sudo systemctl status isc-dhcp-server
-![alt text](image-14.png)
+![alt text](image-19.png)
 
 
-Bước 6: Kiểm tra kết quả cấp phát IP cho các Client
-Sau khi cấu hình xong và khởi động lại máy Client, kiểm tra giao diện mạng để xem IP đã được cấp phát hay chưa:
+Trên máy ảo, đảm bảo rằng ens37 được cấu hình nhận IP qua DHCP. Nếu cần, chạy:
 
-ip a | grep ens37
-
-Kiểm tra kết nối từ Client đến DHCP Server:
-
-ping 10.10.10.10
-![alt text](image-15.png)
+sudo ip addr flush dev ens37
+sudo dhclient -v ens37
+![alt text](image-20.png)
 
 
+Kiểm tra IP nhận được:
 
-Bước 7: Đảm bảo DHCP Server tự động khởi động cùng hệ thống
-Mở lại file cấu hình nếu cần (đảm bảo dòng INTERFACESv4="ens37" đã được thiết lập):
+ip addr show ens37
+![alt text](image-21.png)
 
-sudo nano /etc/default/isc-dhcp-server
 
-ip a | grep ens37
+Bước 7:  Kiểm tra quá trình cấp DHCP
 
-Khởi động lại dịch vụ và kích hoạt chế độ tự động khởi động:
+Sử dụng lệnh tcpdump để kiểm tra gói DHCP (tuỳ chọn):
 
-sudo systemctl restart isc-dhcp-server
-sudo systemctl enable isc-dhcp-server
+sudo tcpdump -i ens37 -n -s 0 port 67 or port 68
+![alt text](image-22.png)
+
+
+Kiểm tra log của DHCP Server:
+
+sudo journalctl -u isc-dhcp-server --no-pager | tail -n 30
+![alt text](image-23.png)
 
 
 Bước 8: Kiểm tra nhật ký hoạt động của DHCP Server
 Theo dõi nhật ký của dịch vụ để kiểm tra các thông báo hoạt động:
 
 sudo journalctl -u isc-dhcp-server -f
+![alt text](image-24.png)
