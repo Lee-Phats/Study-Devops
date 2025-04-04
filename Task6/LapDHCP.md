@@ -19,7 +19,7 @@ Thêm client :
 
 
 Chọn card Host-Only:
-![alt text](image-8.png)
+![alt text](image-25.png)
 
 2.2. Cài đặt DHCP Server
 Bước 1: Cài đặt DHCP Server trên Ubuntu
@@ -43,7 +43,7 @@ INTERFACESv4=""
 
 Sửa lại thành:
 
-INTERFACESv4="ens37"
+INTERFACESv4="ens33"
 ![alt text](image-16.png)
 
 
@@ -81,12 +81,16 @@ sudo netplan apply
 Kiểm tra lại địa chỉ IP của giao diện ens37:
 
 ip a | grep ens37
+![alt text](image-26.png)
+
 
 4. Cấu hình alias IP cho ens33 (để dùng làm gateway)
 
 Thêm alias tạm thời cho ens33:
 
 sudo ip addr add 10.10.10.1/24 dev ens33
+![alt text](image-27.png)
+
 
 Thêm file cấu hình (ví dụ: /etc/netplan/01-netcfg.yaml) 
 
