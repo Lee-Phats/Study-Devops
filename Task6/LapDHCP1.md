@@ -36,6 +36,8 @@ network:
     ens37:
       addresses: [10.10.10.55/24]
 ```
+![alt text](image-30.png)
+
 
 > Sau đó chạy: `sudo netplan apply`
 
@@ -47,22 +49,29 @@ network:
 sudo apt update
 sudo apt install isc-dhcp-server
 ```
+Cách kiểm tra đã cài gói isc-dhcp-server:
+![alt text](image-10.png)
+
 
 | **4** | Chỉnh file `/etc/default/isc-dhcp-server` |
 
 ```bash
 INTERFACESv4="ens37"
 ```
+![alt text](image-31.png)
+
 
 | **5** | Chỉnh file `/etc/dhcp/dhcpd.conf` |
 
-```conf
+```
 subnet 10.10.10.0 netmask 255.255.255.0 {
   range 10.10.10.64 10.10.10.100;
   option routers 10.10.10.1;
   option domain-name-servers 8.8.8.8;
 }
 ```
+![alt text](image-32.png)
+
 
 | **6** | Restart dịch vụ DHCP |
 
@@ -90,6 +99,8 @@ network:
     ens33:
       dhcp4: true
 ```
+![alt text](image-33.png)
+
 
 > Sau đó chạy: `sudo netplan apply`
 
@@ -98,6 +109,8 @@ network:
 ```bash
 ip a
 ```
+![alt text](image-34.png)
+
 
 Bạn sẽ thấy IP nằm trong dải `10.10.10.64 – 10.10.10.100` nếu nhận đúng.
 
@@ -110,4 +123,4 @@ ping 10.10.10.1
 Nếu thành công → máy ảo B đã nhận DHCP từ máy ảo A.
 
 ---
-![alt text](image-29.png)
+![alt text](image-35.png)
