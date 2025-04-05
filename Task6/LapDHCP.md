@@ -205,3 +205,6 @@ Theo dõi nhật ký của dịch vụ để kiểm tra các thông báo hoạt 
 sudo journalctl -u isc-dhcp-server -f
 ```
 ![alt text](image-24.png)
+
+### Bước 8: Qua máy client cấu hình file /etc/netplan/01-netcfg.yaml
+![alt text](image-28.png)
