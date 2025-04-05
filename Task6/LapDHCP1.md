@@ -1,6 +1,6 @@
 # Hướng dẫn kết nối DHCP giữa hai máy ảo VMware thông qua Host-Only
 
-Để máy ảo có card **host-only** nhận được IP từ DHCP server mà bạn đã cài trên máy ảo **có card NAT**, bạn cần đảm bảo các bước sau (giống như bạn đang dựng một **router/DHCP server** trên máy NAT để cấp IP cho máy còn lại):
+Để máy ảo có card **Host-only** nhận được IP từ DHCP server mà bạn đã cài trên máy ảo **có card NAT**, bạn cần đảm bảo các bước sau (giống như bạn đang dựng một **router/DHCP server** trên máy NAT để cấp IP cho máy còn lại):
 
 ---
 
@@ -10,7 +10,7 @@
 |--------|--------|------------|--------|
 | Máy A  | DHCP Server | NAT (`ens33`) | Có internet |
 |        |               | Host-only (`ens37`) | Cấp DHCP cho máy B |
-| Máy B  | Client | Host-only (`ens37`) | Nhận IP từ máy A |
+| Máy B  | Client | Host-only (`ens33`) | Nhận IP từ máy A |
 
 ---
 
@@ -21,7 +21,7 @@
 | Bước | Hành động |
 |------|-----------|
 | **1** | Kiểm tra 2 card mạng `ens33` (NAT), `ens37` (Host-only) |
-| **2** | Gán IP tĩnh cho `ens37` |
+| **2** | Gán IP tĩnh cho `ens33` |
 
 ```bash
 sudo nano /etc/netplan/01-netcfg.yaml
@@ -34,7 +34,7 @@ network:
     ens33:
       dhcp4: yes
     ens37:
-      addresses: [10.10.10.1/24]
+      addresses: [10.10.10.55/24]
 ```
 
 > Sau đó chạy: `sudo netplan apply`
@@ -58,7 +58,7 @@ INTERFACESv4="ens37"
 
 ```conf
 subnet 10.10.10.0 netmask 255.255.255.0 {
-  range 10.10.10.50 10.10.10.100;
+  range 10.10.10.64 10.10.10.100;
   option routers 10.10.10.1;
   option domain-name-servers 8.8.8.8;
 }
@@ -87,7 +87,7 @@ sudo nano /etc/netplan/01-netcfg.yaml
 network:
   version: 2
   ethernets:
-    ens37:
+    ens33:
       dhcp4: true
 ```
 
@@ -99,7 +99,7 @@ network:
 ip a
 ```
 
-Bạn sẽ thấy IP nằm trong dải `10.10.10.50 – 10.10.10.100` nếu nhận đúng.
+Bạn sẽ thấy IP nằm trong dải `10.10.10.64 – 10.10.10.100` nếu nhận đúng.
 
 | **4** | Kiểm tra kết nối đến máy A |
 
@@ -110,3 +110,4 @@ ping 10.10.10.1
 Nếu thành công → máy ảo B đã nhận DHCP từ máy ảo A.
 
 ---
+![alt text](image-29.png)
