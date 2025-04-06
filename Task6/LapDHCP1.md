@@ -124,3 +124,14 @@ Nếu thành công → máy ảo B đã nhận DHCP từ máy ảo A.
 
 ---
 ![alt text](image-35.png)
+
+| **5** | Server ping sang IP của client |
+
+```bash
+ping 10.10.10.68
+```
+
+Nếu thành công → máy ảo B đã nhận DHCP từ máy ảo A.
+
+---
+![alt text](image-37.png)
